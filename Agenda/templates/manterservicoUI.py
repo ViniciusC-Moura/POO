@@ -23,8 +23,8 @@ class ManterServicoUI:
             list_dic = []
             for obj in servicos:
                 list_dic.append(obj.to_json())
-                df = pd.DataFrame(list_dic)
-                st.dataframe(df)
+            df = pd.DataFrame(list_dic)
+            st.dataframe(df)
 
     def inserir():
         descricao = st.text_area("Descreva o serviço")
@@ -45,9 +45,21 @@ class ManterServicoUI:
             op = st.selectbox("Atualização de Serviços", servicos)
             descricao = st.text_area("Nova descrição", op.get_descricao())
             valor = st.text_input("Novo valor", op.get_valor())
-
-        if st.button("Atualizar"):
-            id = op.get_id()
-            View.servico_atualizar(id, descricao, valor)
-            st.success("Cliente atualizado com sucesso")
+            if st.button("Atualizar"):
+                id = op.get_id()
+                View.servico_atualizar(id, descricao, valor)
+                st.success("Cliente atualizado com sucesso")
+                time.sleep(2)
+                st.rerun()
         
+    def excluir():
+        servicos = View.servico_listar()
+        if len(servicos) == 0: st.write("Nenhum serviço cadastrado")
+        else:
+            op = st.selectbox("Exclusão de Serviços", servicos)
+            if st.button("Excluir"):
+                id = op.get_id()
+                View.servico_excluir(id)
+                st.success("Serviço excluído com sucesso")
+                time.sleep(2)
+                st.rerun()

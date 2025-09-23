@@ -13,7 +13,7 @@ class Servico:
     def get_valor(self): return self.__valor
 
     def __str__(self):
-        return f"Serviço {self.id} | {self.descricao} | Valor: {self.valor}"
+        return f"Serviço {self.__id} | {self.__descricao} | Valor: {self.__valor}"
 
     def to_json(self):
         dic = {"id":self.__id, "descricao":self.__descricao, "valor":self.__valor}

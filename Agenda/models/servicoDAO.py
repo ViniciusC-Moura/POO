@@ -10,9 +10,9 @@ class ServicoDAO():
         for aux in cls.__objetos:
             if aux.get_id() > id:
                 id = aux.get_id()
-                obj.set_id(id + 1)
-                cls.__objetos.append(obj)
-                cls.salvar()
+        obj.set_id(id + 1)
+        cls.__objetos.append(obj)
+        cls.salvar()
 
     @classmethod
     def listar(cls):
@@ -56,5 +56,5 @@ class ServicoDAO():
 
     @classmethod
     def salvar(cls):
-        with open("clientes.json", mode="w") as arquivo:
+        with open("servicos.json", mode="w") as arquivo:
             json.dump(cls.__objetos, arquivo, default = Servico.to_json)
