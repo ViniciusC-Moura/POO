@@ -68,19 +68,16 @@ class View:
     def profissional_listar_id(id):
         profissional = ProfissionalDAO.listar_id(id)
         return profissional
-    def profissional_inserir():
-        c = Profissional(0, data)
-        c.set_confirmado(confirmado)
-        c.set_id_cliente(id_cliente)
-        c.set_id_servico(id_servico)
+    def profissional_inserir(nome, especialidade, conselho):
+        c = Profissional(0, nome, especialidade, conselho)
         ProfissionalDAO.inserir(c)
-    def profissional_atualizar(id, data, confirmado, id_cliente, id_servico):
-        c = Profissional(id, data)
-        c.set_confirmado(confirmado)
-        c.set_id_cliente(id_cliente)
-        c.set_id_servico(id_servico)
+    def profissional_atualizar(id, nome, especialidade, conselho):
+        c = Profissional(id, nome, especialidade, conselho)
+        c.set_nome(nome)
+        c.set_especialidade(especialidade)
+        c.set_conselho(conselho)
         ProfissionalDAO.atualizar(c)
     def profissional_excluir(id):
-        c = Profissional(id, None)
+        c = Profissional(id, "", "", "")
         ProfissionalDAO.excluir(c)
 
