@@ -5,8 +5,11 @@ from templates.manterprofissionalUI import ManterProfissionalUI
 
 from templates.abrircontaUI import AbrirContaUI
 from templates.loginUI import LoginUI
+
 from templates.perfilclienteUI import PerfilClienteUI
 from templates.perfilprofissionalUI import PerfilProfissionalUI
+from templates.abriragendaUI import AbrirAgendaUI
+
 from views import View
 
 import streamlit as st
@@ -24,8 +27,9 @@ class IndexUI:
         if op == "Meus Dados": PerfilClienteUI.main()
 
     def menu_profissional():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Abrir Minha Agenda"])
         if op == "Meus Dados": PerfilProfissionalUI.main()
+        if op == "Abrir Minha Agenda": AbrirAgendaUI.main()
 
     def menu_admin():            
         op = st.sidebar.selectbox("Menu", ["Cadastro de Clientes", "Cadastro de Serviços", "Cadastro de Horários", "Cadastro de Profissionais"])
