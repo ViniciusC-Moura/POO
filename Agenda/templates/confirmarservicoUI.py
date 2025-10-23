@@ -15,6 +15,7 @@ class ConfirmarServicoUI:
                 if not obj.get_confirmado() and obj.get_id_profissional() == op.get_id(): h_validos.append(obj)
 
             horario = st.selectbox("Informe o horário", h_validos)
+            cliente = st.selectbox("Cliente", [horario], disabled=True)
 
             if st.button("Confirmar"):
                 horario.set_confirmado(True)

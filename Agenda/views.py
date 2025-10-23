@@ -32,7 +32,7 @@ class View:
         cliente = Cliente(0, nome, email, fone, senha)
         ClienteDAO.inserir(cliente)
     def cliente_atualizar(id, nome, email, fone, senha):
-        cliente = Cliente(id, nome, email, fone)
+        cliente = Cliente(id, nome, email, fone, senha)
         ClienteDAO.atualizar(cliente)
     def cliente_excluir(id):
         cliente = Cliente(id, "", "", "", "")

@@ -2,6 +2,8 @@ from templates.manterclienteUI import ManterClienteUI
 from templates.manterservicoUI import ManterServicoUI
 from templates.manterhorarioUI import ManterHorarioUI
 from templates.manterprofissionalUI import ManterProfissionalUI
+from templates.alterarsenhaadminUI import AlterarSenhaUI
+
 
 from templates.abrircontaUI import AbrirContaUI
 from templates.loginUI import LoginUI
@@ -40,11 +42,12 @@ class IndexUI:
         if op == "Confirmar Serviço": ConfirmarServicoUI.main()
 
     def menu_admin():            
-        op = st.sidebar.selectbox("Menu", ["Cadastro de Clientes", "Cadastro de Serviços", "Cadastro de Horários", "Cadastro de Profissionais"])
+        op = st.sidebar.selectbox("Menu", ["Cadastro de Clientes", "Cadastro de Serviços", "Cadastro de Horários", "Cadastro de Profissionais", "Alterar Senha"])
         if op == "Cadastro de Clientes": ManterClienteUI.main()
         if op == "Cadastro de Serviços": ManterServicoUI.main()
         if op == "Cadastro de Horários": ManterHorarioUI.main()
         if op == "Cadastro de Profissionais": ManterProfissionalUI.main()
+        if op == "Alterar Senha": AlterarSenhaUI.main()
 
     def sidebar():
         if "usuario_id" not in st.session_state: IndexUI.menu_visitante()
@@ -52,7 +55,7 @@ class IndexUI:
             admin = st.session_state["usuario_nome"] == "admin"
             st.sidebar.write("Bem-vindo(a), " + st.session_state["usuario_nome"])
             if admin: IndexUI.menu_admin()
-            if st.session_state["usuario_nivel"] == "cliente": IndexUI.menu_cliente()
+            if st.session_state["usuario_nivel"] == "cliente" and not admin: IndexUI.menu_cliente()
             if st.session_state["usuario_nivel"] == "profissional": IndexUI.menu_profissional()
             IndexUI.sair_do_sistema()
 
