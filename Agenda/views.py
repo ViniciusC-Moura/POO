@@ -29,12 +29,29 @@ class View:
         c = ClienteDAO.listar_id(id)
         return c
     def cliente_inserir(nome, email, fone, senha):
+        if not nome or not email or not fone or not senha: raise ValueError("Nenhum valor pode ser nulo.")
+        if email == "admin": raise PermissionError("Email 'admin' não pode ser criado.")
+        for i in View.cliente_listar():
+            if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
+        for i in View.profissional_listar():
+            if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
+
         cliente = Cliente(0, nome, email, fone, senha)
         ClienteDAO.inserir(cliente)
     def cliente_atualizar(id, nome, email, fone, senha):
+        if not id or not nome or not email or not fone or not senha: raise ValueError("Nenhum valor pode ser nulo.")
+        if email == "admin": raise PermissionError("Email 'admin' não pode ser criado.")
+        for i in View.cliente_listar():
+            if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
+        for i in View.profissional_listar():
+            if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
+
         cliente = Cliente(id, nome, email, fone, senha)
         ClienteDAO.atualizar(cliente)
     def cliente_excluir(id):
+        for i in View.horario_listar():
+            if id == i.get_id_cliente():
+                raise PermissionError("Cliente já tem um horário agendado.")
         cliente = Cliente(id, "", "", "", "")
         ClienteDAO.excluir(cliente)
 

@@ -15,11 +15,21 @@ class Cliente:
     def get_fone(self): return self.__fone
     def get_senha(self): return self.__senha
 
-    def set_id(self, id): self.__id = id
-    def set_nome(self, nome): self.__nome = nome
-    def set_email(self, email): self.__email = email
-    def set_fone(self, fone): self.__fone = fone
-    def set_senha(self, senha): self.__senha = senha
+    def set_id(self, id): 
+        if not id: raise ValueError("Cliente.__id não pode ser nulo")
+        else: self.__id = id
+    def set_nome(self, nome):
+        if not nome: raise ValueError("Cliente.__nome não pode ser nulo")
+        else: self.__nome = nome
+    def set_email(self, email):
+        if not email: raise ValueError("Cliente.__email não pode ser nulo")
+        else: self.__email = email
+    def set_fone(self, fone):
+        if not fone: raise ValueError("Cliente.__fone não pode ser nulo")
+        else: self.__fone = fone
+    def set_senha(self, senha):
+        if not senha: raise ValueError("Cliente.__senha não pode ser nulo")
+        else: self.__senha = senha
 
     def to_json(self):
         dic = {"id":self.__id, "nome":self.__nome, "email":self.__email, "fone":self.__fone, "senha":self.__senha}
