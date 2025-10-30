@@ -77,7 +77,7 @@ class View:
         return horario
     def horario_inserir(data, confirmado, id_cliente, id_servico, id_profissional):
         for h in View.horario_listar():
-            if data == h.get_data() and id_profissional == h.get_id_profissional:
+            if data == h.get_data() and id_profissional == h.get_id_profissional():
                 raise PermissionError("Profissional já tem esse horário agendado")
         c = Horario(0, data)
         c.set_confirmado(confirmado)
@@ -87,7 +87,7 @@ class View:
         HorarioDAO.inserir(c)
     def horario_atualizar(id, data, confirmado, id_cliente, id_servico, id_profissional):
         for h in View.horario_listar():
-            if data == h.get_data() and id_profissional == h.get_id_profissional:
+            if data == h.get_data() and id_profissional == h.get_id_profissional():
                 raise PermissionError("Profissional já tem esse horário agendado")
         c = Horario(id, data)
         c.set_confirmado(confirmado)

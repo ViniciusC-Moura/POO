@@ -20,8 +20,8 @@ class Horario:
 
     def set_id(self, id): 
         self.__id = id
-    def set_data(self, data: datetime): 
-        if data.year < 2025: raise ValueError("Horario.__data não pode ser anterior a 2025")
+    def set_data(self, data):
+        if data and data.year < 2025: raise ValueError("Horario.__data não pode ser anterior a 2025")
         else: self.__data = data
     def set_confirmado(self, confirmado): 
         self.__confirmado = confirmado
