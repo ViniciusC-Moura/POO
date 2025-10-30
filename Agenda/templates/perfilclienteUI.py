@@ -12,7 +12,11 @@ class PerfilClienteUI:
         senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
 
         if st.button("Atualizar"):
-            id = op.get_id()
-            View.cliente_atualizar(id, nome, email, fone, senha)
-
-            st.success("Cliente atualizado com sucesso")
+            try:
+                id = op.get_id()
+                View.cliente_atualizar(id, nome, email, fone, senha)
+                st.success("Cliente atualizado com sucesso")
+            except ValueError:
+                st.write("Email já registrado ou campo vazio.")
+            except PermissionError:
+                st.write("Não é permitido criar um email 'admin'")

@@ -33,10 +33,15 @@ class ManterProfissionalUI:
         especialidade = st.text_input("Informe a especialidade")
         conselho = st.text_input("Informe o conselho")
         if st.button("Inserir"):
-            View.profissional_inserir(email, senha, nome, especialidade, conselho)
-            st.success("Profissional inserido com sucesso")
-            time.sleep(2)
-            st.rerun()
+            try:
+                View.profissional_inserir(email, senha, nome, especialidade, conselho)
+                st.success("Profissional inserido com sucesso")
+                time.sleep(2)
+                st.rerun()
+            except ValueError:
+                st.write("Email já registrado ou campo vazio.")
+            except PermissionError:
+                st.write("Não é permitido criar um email 'admin'")
 
     def atualizar():
         profissionais = View.profissional_listar()
@@ -47,11 +52,17 @@ class ManterProfissionalUI:
             especialidade = st.text_input("Informe o nova especialidade", op.get_especialidade())
             conselho = st.text_input("Informe o novo conselho", op.get_conselho())
             if st.button("Atualizar"):
-                id = op.get_id()
-                View.profissional_atualizar(id, nome, especialidade, conselho)
-                st.success("Profissional atualizado com sucesso")
-                time.sleep(2)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    View.profissional_atualizar(id, nome, especialidade, conselho)
+                    st.success("Profissional atualizado com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+                except ValueError:
+                    st.write("Email já registrado ou campo vazio.")
+                except PermissionError:
+                    st.write("Não é permitido criar um email 'admin'")
+
 
     def excluir():
         profissionais = View.profissional_listar()
@@ -59,8 +70,11 @@ class ManterProfissionalUI:
         else:
             op = st.selectbox("Exclusão de Profissionais", profissionais)
             if st.button("Excluir"):
-                id = op.get_id()
-                View.profissional_excluir(id)
-                st.success("Profissional excluído com sucesso")
-                time.sleep(2)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    View.profissional_excluir(id)
+                    st.success("Profissional excluído com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+                except PermissionError:
+                    st.write("Não é possível excluir profissional com horário agendado.")

@@ -32,10 +32,15 @@ class ManterClienteUI:
         fone = st.text_input("Informe o fone")
         senha = st.text_input("Informe a senha")
         if st.button("Inserir"):
-            View.cliente_inserir(nome, email, fone, senha)
-            st.success("Cliente inserido com sucesso")
-            time.sleep(2)
-            st.rerun()
+            try:
+                View.cliente_inserir(nome, email, fone, senha)
+                st.success("Cliente inserido com sucesso")
+                time.sleep(2)
+                st.rerun()
+            except ValueError:
+                st.write("Email já registrado ou campo vazio.")
+            except PermissionError:
+                st.write("Não é permitido criar um email 'admin'")
 
     def atualizar():
         clientes = View.cliente_listar()
@@ -47,20 +52,28 @@ class ManterClienteUI:
             fone = st.text_input("Informe o novo fone", op.get_fone())
             senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
             if st.button("Atualizar"):
-                id = op.get_id()
-                View.cliente_atualizar(id, nome, email, fone, senha)
-                st.success("Cliente atualizado com sucesso")
-                time.sleep(2)
-                st.rerun()
+                try:
+                    id = op.get_id()
+                    View.cliente_atualizar(id, nome, email, fone, senha)
+                    st.success("Cliente atualizado com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+                except ValueError:
+                    st.write("Email já registrado ou campo vazio.")
+                except PermissionError:
+                    st.write("Não é permitido criar um email 'admin'")
 
     def excluir():
         clientes = View.cliente_listar()
         if len(clientes) == 0: st.write("Nenhum cliente cadastrado")
         else:
             op = st.selectbox("Exclusão de Clientes", clientes)
-            if st.button("Excluir"):
-                id = op.get_id()
-                View.cliente_excluir(id)
-                st.success("Cliente excluído com sucesso")
-                time.sleep(2)
-                st.rerun()
+            try:
+                if st.button("Excluir"):
+                    id = op.get_id()
+                    View.cliente_excluir(id)
+                    st.success("Cliente excluído com sucesso")
+                    time.sleep(2)
+                    st.rerun()
+            except PermissionError:
+                st.write("Não é possível excluir clientes com horário agendado.")
