@@ -10,6 +10,9 @@ from models.horarioDAO import HorarioDAO
 from models.profissional import Profissional
 from models.profissionalDAO import ProfissionalDAO
 
+from models.avaliacao import Avaliacao
+from models.avaliacaoDAO import AvaliacaoDAO
+
 class View:
 
     def cliente_criar_admin():
@@ -127,8 +130,9 @@ class View:
         for i in View.cliente_listar():
             if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
         for i in View.profissional_listar():
-            if email == i.get_email(): raise ValueError("Já existe alguém com esse email.")
+            if email == i.get_email() and i.get_id() != id: raise ValueError("Já existe alguém com esse email.")
         c = Profissional(id, nome, especialidade, conselho, email, senha)
+        c.atualizar_nota(View.avaliacao_listar())
         ProfissionalDAO.atualizar(c)
     def profissional_excluir(id):
         for i in View.horario_listar():
@@ -137,3 +141,30 @@ class View:
         c = Profissional(id, "", "", "", "", "")
         ProfissionalDAO.excluir(c)
 
+    def avaliacao_listar():
+        return AvaliacaoDAO.listar()
+    def avaliacao_listar_id(id):
+        a = AvaliacaoDAO.listar_id(id)
+        return a
+    def avaliacao_inserir(id_cliente, id_profissional, nota):
+        nova = Avaliacao(0, id_cliente, id_profissional, nota)
+        AvaliacaoDAO.inserir(nova)
+        p = View.profissional_listar_id(id_profissional)
+        if p:
+            View.profissional_atualizar(p.get_id(), p.get_nome(), p.get_especialidade(), p.get_conselho(), p.get_email(), p.get_senha())
+            p.atualizar_nota(View.avaliacao_listar())
+    def avaliacao_atualizar(id, id_cliente, id_profissional, nota):
+        a = Avaliacao(id, id_cliente, id_profissional, nota)
+        AvaliacaoDAO.atualizar(a)
+        p = View.profissional_listar_id(id_profissional)
+        if p:
+            View.profissional_atualizar(p.get_id(), p.get_nome(), p.get_especialidade(), p.get_conselho(), p.get_email(), p.get_senha())
+            p.atualizar_nota(View.avaliacao_listar())
+    def avaliacao_excluir(id):
+        a = View.avaliacao_listar_id(id)
+        if a is None: return
+        AvaliacaoDAO.excluir(a)
+        p = View.profissional_listar_id(a.get_id_profissional())
+        if p:
+            View.profissional_atualizar(p.get_id(), p.get_nome(), p.get_especialidade(), p.get_conselho(), p.get_email(), p.get_senha())
+            p.atualizar_nota(View.avaliacao_listar)

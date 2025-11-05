@@ -1,13 +1,12 @@
 class Profissional:
-    def __init__(self, id, nome, especialidade, conselho, email, senha, avaliacoes):
+    def __init__(self, id, nome, especialidade, conselho, email, senha, nota=0.0):
         self.set_id(id)
         self.set_nome(nome)
         self.set_especialidade(especialidade)
         self.set_conselho(conselho)
         self.set_email(email)
         self.set_senha(senha)
-        self.set_avaliacoes(avaliacoes)
-        self.set_get_nota()
+        self.set_nota(nota)
 
     def __str__(self):
         return f" {self.__id} - {self.__nome} - {self.__especialidade} - {self.__conselho} - {self.__nota}"
@@ -18,10 +17,9 @@ class Profissional:
     def get_conselho(self): return self.__conselho
     def get_email(self): return self.__email
     def get_senha(self): return self.__senha
-    def get_avaliacoes(self): return self.__avaliacoes
     def get_nota(self): return self.__nota
 
-    def set_id(self, id): 
+    def set_id(self, id):
         if not id: raise ValueError("Profissional.__id não pode ser nulo")
         else: self.__id = id
     def set_nome(self, nome):
@@ -39,18 +37,21 @@ class Profissional:
     def set_senha(self, senha):
         if not senha: raise ValueError("Profissional.__senha não pode ser nulo")
         else: self.__senha = senha
-    def set_avaliacoes(self, avaliacoes: list):
-        self.__avaliacoes = avaliacoes
 
-    def set_get_nota(self):
-        if not self.__avaliacoes: self.__nota = 0.0
-        else: self.__nota = sum(self.__avaliacoes) / len(self.__avaliacoes)
+    def set_nota(self, nota):
+        if nota is None or nota < 0:
+            raise ValueError("Profissional.__nota deve ser um número não negativo")
+        self.__nota = float(nota)
+
+    def atualizar_nota(self, avaliacoes):
+        notas = [a.get_nota() for a in avaliacoes if a.get_id_profissional() == self.__id]
+        self.__nota = sum(notas) / len(notas) if notas else 0.0
         return self.__nota
 
     def to_json(self):
-        dic = {"id":self.__id, "nome":self.__nome, "especialidade":self.__especialidade, "conselho":self.__conselho, "email":self.__email, "senha":self.__senha, "avaliacoes":self.__avaliacoes, "nota":self.__nota}
+        dic = {"id":self.__id, "nome":self.__nome, "especialidade":self.__especialidade, "conselho":self.__conselho, "email":self.__email, "senha":self.__senha, "nota":self.__nota}
         return dic
 
     @staticmethod
     def from_json(dic):
-        return Profissional(dic["id"], dic["nome"], dic["especialidade"], dic["conselho"], dic["email"], dic["senha"], dic["avaliacoes"])
+        return Profissional(dic["id"], dic["nome"], dic["especialidade"], dic["conselho"], dic["email"], dic["senha"], dic.get("nota", 0.0))
