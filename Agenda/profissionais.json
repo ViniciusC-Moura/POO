@@ -1,1 +1,1 @@
-[{"id": 1, "nome": "Joana", "especialidade": "Transporte", "conselho": "Beba \u00e1gua", "email": "joana@email", "senha": "joana"}, {"id": 2, "nome": "pedro", "especialidade": "encanador", "conselho": "oi", "email": "pedro@email", "senha": "pedro"}]
+[{"id": 1, "nome": "Joana", "especialidade": "Transporte", "conselho": "Beba \u00e1gua", "email": "joana@email", "senha": "joana", "avaliacoes": [], "nota": 0.0}, {"id": 2, "nome": "pedro", "especialidade": "encanador", "conselho": "oi", "email": "pedro@email", "senha": "pedro", "avaliacoes": [], "nota": 0.0}]

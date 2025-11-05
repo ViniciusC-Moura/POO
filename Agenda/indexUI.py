@@ -4,12 +4,12 @@ from templates.manterhorarioUI import ManterHorarioUI
 from templates.manterprofissionalUI import ManterProfissionalUI
 from templates.alterarsenhaadminUI import AlterarSenhaUI
 
-
 from templates.abrircontaUI import AbrirContaUI
 from templates.loginUI import LoginUI
 
 from templates.perfilclienteUI import PerfilClienteUI
 from templates.meusservicos import MeusServicosUI
+from templates.avaliarprofissionalUI import AvaliarProfissionalUI
 
 from templates.perfilprofissionalUI import PerfilProfissionalUI
 from templates.abriragendaUI import AbrirAgendaUI
@@ -30,9 +30,10 @@ class IndexUI:
         if op == "Abrir Conta": AbrirContaUI.main()
 
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Meus Serviços"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Meus Serviços", "Avaliar Profissional"])
         if op == "Meus Dados": PerfilClienteUI.main()
         if op == "Meus Serviços": MeusServicosUI.main()
+        if op == "Avaliar Profissional": AvaliarProfissionalUI.main()
 
     def menu_profissional():
         op = st.sidebar.selectbox("Menu", ["Meus Dados", "Abrir Minha Agenda", "Ver Minha Agenda", "Confirmar Serviço"])
@@ -60,7 +61,6 @@ class IndexUI:
             IndexUI.sair_do_sistema()
 
     def main():
-        View.cliente_criar_admin()
         IndexUI.sidebar()
 
     def sair_do_sistema():
