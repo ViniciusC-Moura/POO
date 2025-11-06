@@ -12,6 +12,8 @@ class PerfilProfissionalUI:
         conselho = st.text_input("Informe o novo conselho", op.get_conselho())
         email = st.text_input("Informe o novo e-mail", op.get_email())
         senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
+        nota = st.text_input("Nota", op.get_nota(), disabled=True)
+
 
         if st.button("Atualizar"):
             try:

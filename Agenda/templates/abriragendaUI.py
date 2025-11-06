@@ -7,7 +7,7 @@ class AbrirAgendaUI:
     def main():
         st.header("Abrir Minha Agenda")
 
-        op = profView.issional_listar_id(st.session_state["usuario_id"])
+        op = View.profissional_listar_id(st.session_state["usuario_id"])
         data = st.text_input("Informe a data (dd/mm/yyyy)") 
         hora_inicial = st.text_input("Informe o horário inicial no formato HH:MM")
         hora_final = st.text_input("Informe o horário final no formato HH:MM")
